@@ -9,7 +9,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/chat/", encoders = MensagemEncoder.class, decoders = MensagemDecoder.class)
+@ServerEndpoint(value = "/chat", encoders = MensagemEncoder.class, decoders = MensagemDecoder.class)
 public class ChatCentral {
     
     @OnOpen
