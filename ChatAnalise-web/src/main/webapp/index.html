@@ -3,92 +3,51 @@
     <head>
         <title>CHAT ANALISE</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<script>
-	var wsocket;
-	var serviceLocation = "ws://0.0.0.0:8080/hascode/chat/";
-	var $nickName;
-	var $message;
-	var $chatWindow;
-	var room = '';
-
-	function onMessageReceived(evt) {
-		var msg = JSON.parse(evt.data); // native API
-		var $messageLine = $('<tr><td class="received">' + msg.received
-				+ '</td><td class="user label label-info">' + msg.sender
-				+ '</td><td class="message badge">' + msg.message
-				+ '</td></tr>');
-		$chatWindow.append($messageLine);
-	}
-	function sendMessage() {
-		var msg = '{"message":"' + $message.val() + '", "sender":"'
-				+ $nickName.val() + '", "received":""}';
-		wsocket.send(msg);
-		$message.val('').focus();
-	}
-
-	function connectToChatserver() {
-		room = $('#chatroom option:selected').val();
-		wsocket = new WebSocket(serviceLocation + room);
-		wsocket.onmessage = onMessageReceived;
-	}
-
-	function leaveRoom() {
-		wsocket.close();
-		$chatWindow.empty();
-		$('.chat-wrapper').hide();
-		$('.chat-signin').show();
-		$nickName.focus();
-	}
-
-	$(document).ready(function() {
-		$nickName = $('#nickname');
-		$message = $('#message');
-		$chatWindow = $('#response');
-		$('.chat-wrapper').hide();
-		$nickName.focus();
-		
-		$('#enterRoom').click(function(evt) {
-			evt.preventDefault();
-			connectToChatserver();
-			$('.chat-wrapper h2').text('Chat # '+$nickName.val() + "@" + room);
-			$('.chat-signin').hide();
-			$('.chat-wrapper').show();
-			$message.focus();
-		});
-		$('#do-chat').submit(function(evt) {
-			evt.preventDefault();
-			sendMessage()
-		});
-		
-		$('#leave-room').click(function(){
-			leaveRoom();
-		});
-	});
-</script>
+        <link rel="stylesheet" type="text/css" href="arquivos/css/bootstrap.min.css">
     </head>
     <body>
+        <h2 class="alert alert-success"><center>CHAT ANALISE</center></h2>
         
-         <h2 class="alert alert-success"><center>CHAT ANALISE</center></h2>
-        <div class="container chat-wrapper">
+        <div id="entrando" class="container chat-signin">
+            <form class="form-signin">
+                <h4 class="form-signin-heading"><center>Digite seu nome</center></h4>
+                <div class="form-group">
+                    <input type="text" name="nome" id="nome" required maxlength="40"  class="form-control" placeholder="nome">
+                </div>
+                <button class="btn btn-large btn-primary" type="button" id="entrar" style="width:130px ; float: right ">Entrar</button>
+            </form>
+        </div>
+        
+        <div id="chat" style="display:none" class="container chat-wrapper">
             <form id="do-chat">
-               
-                <table id="response" class="table table-bordered"></table>
-                
+
+                <table id="janelaChat" class="table table-bordered">
+                </table>
+
                 <fieldset>
-                    <legend>Enter your message...</legend>
+                    <legend>Digite sua mensagem...</legend>
                     <div class="controls">
-                        <textarea id="textarea" name="textarea" placeholder="  Digite a Mensagem..." id="message" style="width:100%; height:60px; border-radius: 10px; margin-bottom: 10px"></textarea>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-large btn-block btn-primary" value="Enviar" />
+                        <textarea name="textarea" placeholder="Digite a Mensagem..." id="conteudoMensagem" style="width:100%; height:60px; border-radius: 10px; margin-bottom: 10px"></textarea>
+                        <div style="
+                            margin-top: -17px;
+                            float: left;
+                            padding-left: 95px;
+                            margin-bottom: 25px;
+                             ">
+                            <input type="radio" name="tipoMensagem" value="texto" checked />Texto    
+                            <input type="radio" name="tipoMensagem" value="audio" />Audio
+                            <input type="radio" name="tipoMensagem" value="video" />Video
                         </div>
-                        <div class="form-group" style="width: 60px; margin-left: 10px">
-                            <button class="btn btn-large btn-block" type="button" id="leave-room">Sair</button>
+                        
+                        <div class="form-group">
+                            <input onclick="enviarMensagem()" type="button" class="btn btn-large btn-block btn-primary" value="Enviar" />
                         </div>
                     </div>
                 </fieldset>
             </form>
         </div>
-
+        
+        <script type="text/javascript" src="arquivos/js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="arquivos/js/websocket.js"></script>
     </body>
 </html>

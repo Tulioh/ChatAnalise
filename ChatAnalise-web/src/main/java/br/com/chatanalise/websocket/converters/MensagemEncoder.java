@@ -1,7 +1,7 @@
 package br.com.chatanalise.websocket.converters;
 
 import br.com.chatanalise.DateHelper;
-import br.com.chatanalise.model.Mensagem;
+import br.com.chatanalise.padroes.Mensagem;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.websocket.EncodeException;
@@ -15,7 +15,7 @@ public class MensagemEncoder implements Encoder.Text<Mensagem> {
         JsonObject value = Json.createObjectBuilder()
                 .add( "mensagem", DateHelper.dateToString( msg.getDataHora() ) )
                 .add( "nomeUsuario", msg.getNomeUsuario() )
-                .add( "texto", msg.getTexto() )
+                .add( "conteudoMensagem", msg.gerarMensagem() )
                 .build();
         
         return value.toString();

@@ -1,7 +1,9 @@
 package br.com.chatanalise.websocket.converters;
 
 import br.com.chatanalise.DateHelper;
-import br.com.chatanalise.model.Mensagem;
+import br.com.chatanalise.padroes.Mensagem;
+import br.com.chatanalise.padroes.TipoMensagem;
+import br.com.chatanalise.padroes.TipoMensagemFactory;
 import java.io.StringReader;
 import java.util.Date;
 import javax.json.Json;
@@ -21,7 +23,10 @@ public class MensagemDecoder implements Decoder.Text<Mensagem> {
         Date data = DateHelper.stringDateTimeToDate( obj.getString( "dataHora" ) );
         mensagem.setDataHora( data );
         mensagem.setNomeUsuario( obj.getString( "nomeUsuario" ) );
-        mensagem.setTexto( obj.getString( "texto" ) );
+        mensagem.setConteudoMensagem( obj.getString( "conteudoMensagem" ) );
+        TipoMensagem tipo = TipoMensagemFactory.getTipoMensagem(
+            obj.getString( "tipoMensagem" ) );
+        mensagem.setTipoMensagem( tipo );
         
         return mensagem;
     }

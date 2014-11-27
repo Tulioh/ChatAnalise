@@ -1,7 +1,7 @@
 package br.com.chatanalise.padroes;
 
 
-import br.com.chatanalise.model.Mensagem;
+import br.com.chatanalise.padroes.Mensagem;
 import java.util.ArrayList;
 
 public class RepositorioDeMensagem {
