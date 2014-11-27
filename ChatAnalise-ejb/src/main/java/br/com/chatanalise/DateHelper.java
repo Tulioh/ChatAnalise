@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class DateHelper {
     
-    public static Date toDate( String data ) {
+    public static Date stringToDate( String data ) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" );
             return dateFormat.parse( data );
@@ -18,7 +18,13 @@ public class DateHelper {
         return new Date();
     }
     
-    public static String toString( Date data ) {
+    public static Date stringDateTimeToDate( String dateTime ) {
+        Long time = Long.valueOf( dateTime );
+        
+        return new Date( time );
+    }
+    
+    public static String dateToString( Date data ) {
         SimpleDateFormat dateFormat = new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" );
         return dateFormat.format( data );
     }
