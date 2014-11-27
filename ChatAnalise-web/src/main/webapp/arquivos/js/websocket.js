@@ -14,7 +14,7 @@ $("#entrar").click(function() {
 });
 
 function conectarAoServidor() {
-    socket = new WebSocket("ws://localhost:8080/chat");
+    socket = new WebSocket("ws://localhost:8080/ChatAnalise-web/chat");
     
     socket.onopen = function() {
         socket.onmessage = receberMensagem;
@@ -35,7 +35,7 @@ function enviarMensagem() {
 function receberMensagem(evt) {
     var msg = JSON.parse( evt.data );
     var $linhaMensagem = $('<tr><td class="received">' + msg.dataHora
-				+ '</td><td class="user label label-info">' + msg.nomeUsuario
+				+ '</td><td class="user label label-info">' + msg.nomeUsuario + ':'
 				+ '</td><td class="message badge">' + msg.conteudoMensagem
 				+ '</td></tr>');
     $janelaDoChat.append( $linhaMensagem );

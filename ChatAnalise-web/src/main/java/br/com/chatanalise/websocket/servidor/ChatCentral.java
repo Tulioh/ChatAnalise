@@ -7,6 +7,7 @@ import br.com.chatanalise.websocket.converters.MensagemEncoder;
 import br.com.chatanalise.websocket.padroes.ListaDeMensagemHelper;
 import java.io.IOException;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.websocket.EncodeException;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -15,19 +16,18 @@ import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint(value = "/chat", encoders = MensagemEncoder.class, decoders = MensagemDecoder.class)
 public class ChatCentral {
-    private final RepositorioDeMensagem repositorio;
-    
-    public ChatCentral() {
-        repositorio = RepositorioDeMensagem.obterInstancia();
-    }
-    
+    private RepositorioDeMensagem repositorio;
+        
     @OnOpen
     public void onOpen( Session session ) {
+        repositorio = RepositorioDeMensagem.obterInstancia();
+        
         List<Mensagem> mensagens = repositorio.getMensagens();
         
-        enviarMensagem(session,
-            ListaDeMensagemHelper
-                .exportarListaParaJson( mensagens ) );
+        if( !mensagens.isEmpty() )
+            enviarMensagem(session,
+                ListaDeMensagemHelper
+                    .exportarListaParaJson( mensagens ) );
     }
     
     @OnMessage

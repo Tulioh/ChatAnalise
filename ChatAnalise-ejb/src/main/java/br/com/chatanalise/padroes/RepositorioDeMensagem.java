@@ -1,7 +1,5 @@
 package br.com.chatanalise.padroes;
 
-
-import br.com.chatanalise.padroes.Mensagem;
 import java.util.ArrayList;
 
 public class RepositorioDeMensagem {
@@ -9,11 +7,14 @@ public class RepositorioDeMensagem {
     private final ArrayList<Mensagem> mensagens;
     
     private RepositorioDeMensagem(){
-        instancia = new RepositorioDeMensagem();
         mensagens = new ArrayList<>();
     }
     
     public static RepositorioDeMensagem obterInstancia() {
+        if( instancia == null ) {
+            return instancia = new RepositorioDeMensagem();
+        }
+        
         return instancia;
     }
     
