@@ -10,5 +10,5 @@
     <module>ChatAnalise-ear</module>
     <module>ChatAnalise-web</module>
     <module>ChatAnalise-ejb</module>
-  </modules>
+  </modules> 
 </project>
